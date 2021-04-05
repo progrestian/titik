@@ -1,0 +1,41 @@
+* {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: Iosevka;
+  font-size: 12pt;
+  min-height: 0;
+}
+
+window#waybar {
+  background: #222;
+  color: #ccc;
+}
+
+#workspaces button {
+  padding: 0 4px;
+  background: transparent;
+}
+
+#workspaces button:hover {
+  background: #555;
+}
+
+#workspaces button.focused {
+  background: #ccc;
+  color: #000;
+}
+
+#workspaces button.urgent {
+  background: #a33;
+}
+
+.modules-right > * > * {
+  margin-right: 16px;
+  color: #ccc;
+}
+
+label:focus {
+  background-color: #000000;
+}
+

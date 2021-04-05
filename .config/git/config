@@ -1,0 +1,16 @@
+[user]
+	email = progrestian@tuta.io
+	name = Daniel Progrestian
+	signingkey = 9A64AB8798C4C0C11A03A1CFCF3452B46A551064
+[core]
+	editor = nvim
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = true
+[push]
+	followTags = true
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main

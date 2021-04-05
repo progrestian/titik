@@ -1,0 +1,52 @@
+{
+  "layer": "top",
+  "height": 32,
+  "modules-left": [
+    "sway/workspaces"
+  ],
+  "modules-right": [
+    "battery",
+    "custom/bluetooth",
+    "cpu",
+    "memory",
+    "network",
+    "pulseaudio",
+    "clock",
+    "tray"
+  ],
+  "battery": {
+    "format": "BAT {}",
+    "tooltip-format": "{time}"
+  },
+  "custom/bluetooth": {
+    "format": "BLU {}",
+    "return-type": "json",
+    "interval": 10,
+    "escape": true,
+    "exec": "$XDG_CONFIG_HOME/waybar/bti.sh",
+    "on-click": "$XDG_CONFIG_HOME/waybar/btt.sh",
+  },
+  "clock": {
+    "format": "{:CLK %H:%M}",
+    "tooltip-format": "{:%A\n%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "CPU {}"
+  },
+  "memory": {
+    "format": "MEM {}"
+  },
+  "network": {
+    "format": "NET {signalStrength}",
+    "tooltip-format": "{essid}\n{ipaddr}\nUp: {bandwidthUpBits}\nDown: {bandwidthDownBits}"
+  },
+  "pulseaudio": {
+    "format": "VOL {volume}",
+    "format-muted": "VOL --"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  }
+}
+

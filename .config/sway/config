@@ -1,0 +1,103 @@
+exec flatpak run com.discordapp.Discord
+exec flatpak run com.valvesoftware.Steam
+exec kdeconnect-indicator
+
+input type:mouse {
+  accel_profile flat
+  pointer_accel 0
+}
+
+input type:touchpad {
+  accel_profile adaptive
+  pointer_accel 0
+  natural_scroll enabled
+  scroll_factor 0.5
+  scroll_method two_finger
+  tap enabled
+  tap_button_map lmr
+}
+
+output * position 0,0 bg ~/cloud/img/pic/2016-bali/edit-matte/beach-rocks.png fill
+output * adaptive_sync off
+
+bar {
+  swaybar_command waybar
+}
+
+# class                 border  bg      text    indictr cborder
+client.focused          #555555 #222222 #cccccc #555555 #555555
+client.focused_inactive #222222 #222222 #cccccc #222222 #222222
+client.unfocused        #222222 #222222 #cccccc #222222 #222222
+client.urgent           #222222 #222222 #cccccc #222222 #222222
+client.placeholder      #222222 #222222 #cccccc #222222 #222222
+client.background               #222222
+
+font Iosevka 12
+default_border pixel 4
+
+assign [app_id="firefox"] workspace firefox
+assign [class="Steam"] workspace steam
+for_window [class="discord"] move to workspace discord
+
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86MonBrightnessUp exec ~/.config/sway/bpu.sh
+bindsym XF86MonBrightnessDown exec ~/.config/sway/bpd.sh
+bindsym XF86TouchpadToggle exec sway input "type:touchpad" events toggle enabled disabled
+
+floating_modifier Mod4 normal
+bindsym Mod4+grave floating toggle
+bindsym Mod4+1 workspace 1
+bindsym Mod4+2 workspace 2
+bindsym Mod4+3 workspace 3
+bindsym Mod4+4 workspace 4
+bindsym Mod4+5 workspace 5
+bindsym Mod4+6 workspace 6
+bindsym Mod4+7 workspace 7
+bindsym Mod4+8 workspace 8
+bindsym Mod4+9 workspace 9
+bindsym Mod4+0 workspace 10
+
+bindsym Mod4+Shift+grave layout toggle
+bindsym Mod4+Shift+1 move container to workspace 1
+bindsym Mod4+Shift+2 move container to workspace 2
+bindsym Mod4+Shift+3 move container to workspace 3
+bindsym Mod4+Shift+4 move container to workspace 4
+bindsym Mod4+Shift+5 move container to workspace 5
+bindsym Mod4+Shift+6 move container to workspace 6
+bindsym Mod4+Shift+7 move container to workspace 7
+bindsym Mod4+Shift+8 move container to workspace 8
+bindsym Mod4+Shift+9 move container to workspace 9
+bindsym Mod4+Shift+0 move container to workspace 10
+bindsym Mod4+Shift+s move container to workspace steam
+bindsym Mod4+Shift+d move container to workspace discord
+bindsym Mod4+Shift+f move container to workspace firefox
+
+bindsym Mod4+Tab workspace back_and_forth
+bindsym Mod4+q split toggle
+bindsym Mod4+w exec alacritty
+bindsym Mod4+e exec nautilus -w /home/progrestian/cloud
+bindsym Mod4+p exec grim ~/cloud/img/ss/$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym Mod4+s exec ~/.config/sway/sts.sh
+bindsym Mod4+d exec ~/.config/sway/std.sh
+bindsym Mod4+f exec ~/.config/sway/stf.sh
+bindsym Mod4+z fullscreen
+bindsym Mod4+x kill
+bindsym Mod4+c scratchpad show
+bindsym Mod4+b exec ~/.config/sway/blw.sh
+bindsym Mod4+n exec ~/.config/sway/nlw.sh
+
+bindsym Mod4+Shift+p exec grim -g "$(slurp)" ~/cloud/img/ss/$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym Mod4+Shift+z reload
+bindsym Mod4+Shift+c move scratchpad
+
+bindsym Mod4+Left focus left
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+bindsym Mod4+Down focus down
+
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Shift+Right move right
+bindsym Mod4+Shift+Down move down
