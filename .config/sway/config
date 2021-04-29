@@ -2,7 +2,7 @@ exec flatpak run com.discordapp.Discord
 exec flatpak run com.valvesoftware.Steam
 exec kdeconnect-indicator
 
-input type:mouse {
+input type:pointer {
   accel_profile flat
   pointer_accel 0
 }
