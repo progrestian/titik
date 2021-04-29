@@ -109,9 +109,7 @@ clr() {
 
 fzi() {
   fn_fzi_file=$(find ~/cloud/img -type f | fzf)
-  if [ -n "$fn_fzi_file" ] && [ "$fn_fzi_file" != " " ]; then
-    imv -r "$fn_fzi_file"
-  fi
+  if [ -n "$fn_fzi_file" ] && [ "$fn_fzi_file" != " " ]; then imv -r "$fn_fzi_file"; fi
 }
 
 fzk() {
@@ -128,37 +126,36 @@ fzr() {
 }
 
 fzv() {
-  fn_fzv_file=$(find ~/.config \
-    -name .netrwhist.conf -prune -o \
-    -name Trolltech.conf -prune -o \
-    -name VSCodium -prune -o \
-    -name build -prune -o \
-    -name chromium -prune -o \
-    -name dconf -prune -o \
-    -name libreoffice -prune -o \
-    -name pipewire -prune -o \
-    -name pulse -prune -o \
-    -name tool-options -prune -o \
-    -type f -print | fzf --preview='head -$LINES {}')
-  if [ -n "$fn_fzv_file" ] && [ "$fn_fzv_file" != " " ]; then
-    nvim "$fn_fzv_file"
-  fi
+  fn_fzv_file=$(
+    find ~/.config \
+      -name .netrwhist.conf -prune -o \
+      -name Trolltech.conf -prune -o \
+      -name VSCodium -prune -o \
+      -name build -prune -o \
+      -name chromium -prune -o \
+      -name dconf -prune -o \
+      -name libreoffice -prune -o \
+      -name pipewire -prune -o \
+      -name pulse -prune -o \
+      -name tool-options -prune -o \
+      -type f -print | \
+    fzf --preview='head -$LINES {}'
+  )
+  if [ -n "$fn_fzv_file" ] && [ "$fn_fzv_file" != " " ]; then nvim "$fn_fzv_file"; fi
 }
 
 fzw() {
-  fn_fzw_ssid=$(nmcli -e yes -f "ssid,rate,signal,security" d wifi list --rescan yes | \
+  fn_fzw_ssid=$(
+    nmcli -e yes -f "ssid,rate,signal,security" d wifi list --rescan yes | \
     fzf --header-lines=1 --reverse --delimiter="," | \
-    awk 'BEGIN {FS="   *"}; {print $1}')
-  if [ -n "$fn_fzw_ssid" ] && [ "$fn_fzw_ssid" != " " ]; then
-    nmcli --ask d wifi connect "$fn_fzw_ssid"
-  fi
+    awk 'BEGIN {FS="   *"}; {print $1}'
+  )
+  if [ -n "$fn_fzw_ssid" ] && [ "$fn_fzw_ssid" != " " ]; then nmcli --ask d wifi connect "$fn_fzw_ssid"; fi
 }
 
 gd() {
   fn_gd_file=$(git ls-files -m | grep -v 'LICENSE\|README.md' | fzf)
-  if [ -n "$fn_gd_file" ] && [ "$fn_gd_file" != " " ]; then
-    git diff "$fn_gd_file"
-  fi
+  if [ -n "$fn_gd_file" ] && [ "$fn_gd_file" != " " ]; then git diff "$fn_gd_file"; fi
 }
 
 gpo() {
@@ -166,9 +163,7 @@ gpo() {
 }
 
 rm() {
-  if [ ! -d "$HOME/.local/share/Trash/files" ];
-    then mkdir -p "$HOME/.local/share/Trash/files"
-  fi
+  if [ ! -d "$HOME/.local/share/Trash/files" ]; then mkdir -p "$HOME/.local/share/Trash/files"; fi
   mv "$1" "$HOME/.local/share/Trash/files"
 }
 
@@ -215,3 +210,4 @@ export PROMPT="%F{yellow}%~ %F{blue}(\$vcs_info_msg_0_)
 # AUTOSTART
 
 if [ -z "$DISPLAY" ] && [ "$TTY" = /dev/tty1 ]; then exec sway; fi
+# if [ -z "$DISPLAY" ] && [ "$TTY" = /dev/tty1 ]; then exec dbus-launch --sh-syntax --exit-with-session sway; fi
