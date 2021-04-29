@@ -1,10 +1,13 @@
 # EXPORTS
 
 export EDITOR=nvim
-export GPG_TTY=$(tty)
+export GPG_TTY=$TTY
 export LESS='-r'
 export MOZ_DBUS_REMOTE=1
 export MOZ_ENABLE_WAYLAND=1
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+export QT_SCALE_FACTOR=1
+export QT_SCREEN_SCALE_FACTORS=1
 export TERM=xterm
 export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/intel_icd.x86_64.json
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -35,7 +38,6 @@ export PATH="$PATH:$XDG_DATA_HOME/cargo/bin"
 
 # ALIASES
 
-alias bw="$XDG_DATA_HOME/npm/bin/bw"
 alias exh="exa -a"
 alias exl="exa -al"
 alias exr="exa -R -L "
@@ -46,6 +48,9 @@ alias tmtbl="libreoffice --view ~/cloud/inf/timetable.ods &! exit"
 alias du="sudo dnf update-y; flatpak update -y"
 alias di="sudo dnf install -y "
 alias ds="sudo dnf search "
+alias xi="sudo xbps-install -Syu "
+alias xl="xbps-query -m"
+alias xs="xbps-query -Rs "
 
 alias ga="git add"
 alias gaa="git add ."
@@ -67,54 +72,63 @@ alias gs="git status -sb"
 
 # FUNCTIONS
 
-function bd() {
-  local level=$1
-  if [ -n "$1" ]; then level=1; fi
-  for i in {1..$1}; do
+bd() {
+  fn_bd_counter=1
+  while [ $fn_bd_counter -le "$1" ]; do
     if [ "$PWD" != "$HOME" ]; then cd ..; fi
+    fn_bd_counter=$((fn_bd_counter + 1))
   done
 }
 
-function bwp() {
-  if [ -z $1 ]; then return; fi
-  if [ -z $BW_SESSION ]; then export BW_SESSION=$(bw --raw unlock); fi
-  wl-copy $(bw get password "$1")
+bwp() {
+  if [ -z "$1" ]; then return; fi
+  if [ -z "$BW_SESSION" ]; then
+    BW_SESSION=$("$XDG_DATA_HOME/npm/bin/bw" --raw unlock)
+    export BW_SESSION
+  fi
+  wl-copy "$(bw get password "$1")"
 }
 
-function bwu() {
-  if [ -z $1 ]; then return; fi
-  if [ -z $BW_SESSION ]; then export BW_SESSION=$(bw --raw unlock); fi
-  wl-copy $(bw get username "$1")
+bwu() {
+  if [ -z "$1" ]; then return; fi
+  if [ -z "$BW_SESSION" ]; then
+    BW_SESSION=$("$XDG_DATA_HOME/npm/bin/bw" --raw unlock)
+    export BW_SESSION
+  fi
+  wl-copy "$(bw get username "$1")"
 }
 
-function cdv() {
-  curl -o /dev/null -s -w %{json} $1 | jq
+cdv() {
+  curl -o /dev/null -s -w "%{json}" "$1" | jq
 }
 
-function clr() {
+clr() {
   clear
   if [ "$PRECMD_FIRST_PROMPT" = false ]; then PRECMD_FIRST_PROMPT=true; fi
 }
 
-function fzi() {
-  local file=$(find ~/cloud/img -type f | fzf)
-  if [ ! -z "$file" -a "$file" != " " ]; then imv -r $file; fi
+fzi() {
+  fn_fzi_file=$(find ~/cloud/img -type f | fzf)
+  if [ -n "$fn_fzi_file" ] && [ "$fn_fzi_file" != " " ]; then
+    imv -r "$fn_fzi_file"
+  fi
 }
 
-function fzk() {
-  kill -9 $(ps -eo pid,cmd | fzf | awk "{print \$1}")
+fzk() {
+  kill -9 "$(ps -eo pid,cmd | fzf | awk "{print \$1}")"
 }
 
-function fzo() {
-  cd $(find . -type d | fzf)
+fzo() {
+  cd "$(find . -type d | fzf)" || return
 }
 
-function fzr() {
-  flatpak run $(flatpak list --columns=application | fzf) &! exit
+fzr() {
+  fn_fzr_app="$(flatpak list --columns=application | fzf)"
+  flatpak run "$fn_fzr_app" &! exit
 }
 
-function fzv() {
-  local file=$(find ~/.config \
+fzv() {
+  fn_fzv_file=$(find ~/.config \
     -name .netrwhist.conf -prune -o \
     -name Trolltech.conf -prune -o \
     -name VSCodium -prune -o \
@@ -126,27 +140,36 @@ function fzv() {
     -name pulse -prune -o \
     -name tool-options -prune -o \
     -type f -print | fzf --preview='head -$LINES {}')
-
-  if [ ! -z "$file" -a "$file" != " " ]; then nvim $file; fi
+  if [ -n "$fn_fzv_file" ] && [ "$fn_fzv_file" != " " ]; then
+    nvim "$fn_fzv_file"
+  fi
 }
 
-function fzw() {
-  local ssid=$(nmcli -e yes -f "ssid,rate,signal,security" d wifi list | fzf --header-lines=1 --reverse --delimiter="," | awk 'BEGIN {FS="   *"}; {print $1}')
-  if [ ! -z "$ssid" -a "$ssid" != " " ]; then nmcli --ask d wifi connect "$ssid"; fi
+fzw() {
+  fn_fzw_ssid=$(nmcli -e yes -f "ssid,rate,signal,security" d wifi list --rescan yes | \
+    fzf --header-lines=1 --reverse --delimiter="," | \
+    awk 'BEGIN {FS="   *"}; {print $1}')
+  if [ -n "$fn_fzw_ssid" ] && [ "$fn_fzw_ssid" != " " ]; then
+    nmcli --ask d wifi connect "$fn_fzw_ssid"
+  fi
 }
 
-function gd() {
-  local file=$(git ls-files -m | grep -v 'LICENSE\|README.md' | fzf)
-  if [ ! -z "$file" -a "$file" != " " ]; then git diff $file; fi
+gd() {
+  fn_gd_file=$(git ls-files -m | grep -v 'LICENSE\|README.md' | fzf)
+  if [ -n "$fn_gd_file" ] && [ "$fn_gd_file" != " " ]; then
+    git diff "$fn_gd_file"
+  fi
 }
 
-function gpu() {
-  git push -u origin $(git rev-parse --abbrev-ref HEAD)
+gpo() {
+  git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
 }
 
-function rm() {
-  if [ ! -d "$HOME/.local/share/Trash/files" ]; then mkdir -p "$HOME/.local/share/Trash/files"; fi
-  mv $1 "$HOME/.local/share/Trash/files"
+rm() {
+  if [ ! -d "$HOME/.local/share/Trash/files" ];
+    then mkdir -p "$HOME/.local/share/Trash/files"
+  fi
+  mv "$1" "$HOME/.local/share/Trash/files"
 }
 
 # ZSH
@@ -157,13 +180,12 @@ bindkey "^[[F"  end-of-line
 bindkey "^[f"   forward-word
 bindkey "^[b"   backward-word
 
-autoload -Uz compinit
+autoload -Uz compinit vcs_info
 compinit
 
-PROMPT="%F{yellow}%~%F{white}"$'\n'"%# "
 PRECMD_FIRST_PROMPT=true
 
-function precmd() {
+precmd() {
   if [ "$PRECMD_FIRST_PROMPT" = true ]; then
     PRECMD_FIRST_PROMPT=false
   else
@@ -171,13 +193,25 @@ function precmd() {
   fi
 }
 
+precmd_vcs_info() {
+  vcs_info
+}
+
+precmd_functions+=(precmd_vcs_info)
+
+setopt prompt_subst
+zstyle :compinstall filename '/home/progrestian/.zshrc'
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' expand prefix suffix
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' menu select=1
 zstyle ':completion:*' select-prompt %SScrolling: %p%s
-zstyle :compinstall filename '/home/progrestian/.zshrc'
+zstyle ':vcs_info:git:*' formats '%F{blue}%r/%b'
+zstyle ':vcs_info:*' enable git
+
+export PROMPT="%F{yellow}%~ %F{blue}(\$vcs_info_msg_0_)
+%F{white}%# "
 
 # AUTOSTART
 
-if [[ -z $DISPLAY && $TTY = /dev/tty1 ]]; then exec sway; fi
+if [ -z "$DISPLAY" ] && [ "$TTY" = /dev/tty1 ]; then exec sway; fi
