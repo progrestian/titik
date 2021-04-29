@@ -19,8 +19,11 @@
 !/.config/sway/*
 !/.config/waybar/
 !/.config/waybar/*
-!/.mozilla/firefox/chrome/
-!/.mozilla/firefox/chrome/*
+!/.mozilla/
+!/.mozilla/firefox/
+!/.mozilla/firefox/*/
+!/.mozilla/firefox/*/chrome/
+!/.mozilla/firefox/*/chrome/*
 !/.var/
 !/.var/app/
 !/.var/app/com.valvesoftware.Steam/
@@ -28,8 +31,8 @@
 !/.var/app/com.valvesoftware.Steam/.local/share/
 !/.var/app/com.valvesoftware.Steam/.local/share/Steam/
 !/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/
-!/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/*/
-!/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/*/*/
+!/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/311204302/
+!/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/311204302/730/
 !/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/311204302/730/local/
 !/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/311204302/730/local/cfg/
 !/.var/app/com.valvesoftware.Steam/.local/share/Steam/userdata/311204302/730/local/cfg/*.cfg

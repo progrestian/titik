@@ -1,0 +1,148 @@
+/* GLOBAL - SET FONT */
+
+* {
+  font-family: Iosevka !important;
+  font-size: 12pt !important;
+}
+
+.toolbarbutton-badge {
+  font-size: 8pt !important;
+}
+
+:root {
+  --toolbarbutton-border-radius: 0 !important;
+}
+
+/* URL BAR - SET ON TOP */
+
+#titlebar {
+  -moz-box-ordinal-group: 1000 !important;
+  background: #222 !important;
+  border-bottom: 4px solid #222 !important;
+}
+
+#nav-bar {
+  margin-top: -5px !important;
+  background: #222 !important;
+  border-bottom: 4px solid #222 !important;
+  height: 41px !important;
+}
+
+/* URL BAR - DISABLE MEGABAR */
+
+#urlbar[breakout][breakout-extend] {
+  font-size: unset !important;
+  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2) !important;
+  width: 100% !important;
+  left: -1px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+  height: var(--urlbar-height) !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  box-shadow: none !important;
+  animation-name: none !important;
+}
+
+#urlbar[breakout][breakout-extend][breakout-extend-animate] > #urlbar-background {
+  animation-duration: 0s !important;
+}
+
+#urlbar:not([focused="true"]):hover > #urlbar-background {
+  box-shadow: none !important;
+}
+
+#urlbar .search-one-offs:not([hidden]) {
+  padding-block: 0 !important;
+}
+
+.urlbarView {
+  margin-inline: 0px !important;
+  width: 100% !important;
+}
+
+.urlbarView-body-inner {
+  border-top: 0 !important;
+}
+
+.urlbarView-row {
+  padding-block: 0 !important;
+  background: #111 !important;
+  height: 32px !important;
+}
+
+.urlbarView-row:hover {
+  background: #555 !important;
+}
+
+.urlbarView-row:not([type="tip"]):not([type="dynamic"])[selected] > .urlbarView-row-inner {
+  background: #ccc !important;
+  border-radius: 0 !important;
+  color: #000 !important;
+}
+
+/* URL BAR - STYLING */
+
+#urlbar-container {
+  --urlbar-container-height: 32px !important;
+  margin: 0 !important;
+}
+
+#urlbar {
+   height: 32px !important;
+}
+
+#urlbar-input-container {
+  --urlbar-height: 32px !important;
+  padding: 0 !important;
+}
+
+#urlbar-background {
+  background: #111 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+#pocket-button,
+#pageActionButton {
+  display: none;
+}
+
+/* TABS - STYLING */
+
+.tabbrowser-tab[visuallyselected="true"] {
+  box-shadow: none !important;
+  background-color: #ccc !important;
+}
+
+.tab-background[selected="true"] {
+  background: #ccc !important;
+  color: #000 !important;
+}
+
+.tabbrowser-tab:hover .tab-background:not([selected="true"]) {
+  background-color: #555 !important;
+}
+
+.tab-label-container {
+  height: 32px !important;
+}
+
+.tab-label-container[selected="true"] {
+  color: #000 !important;
+}
+
+.tab-line {
+  height: 0 !important;
+}
+
+.tabbrowser-tab::after,
+.tabbrowser-tab::before {
+   display: none !important;
+}
