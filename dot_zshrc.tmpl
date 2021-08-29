@@ -11,9 +11,9 @@ export QT_SCREEN_SCALE_FACTORS=1
 export QT_STYLE_OVERRIDE=adwaita
 export TERM=xterm
 {{- if (eq .chezmoi.hostname "menara") }}
-export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json
+# export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.i686.json:/usr/share/vulkan/icd.d/radeon_icd.x86_64.json
 {{- else if (eq .chezmoi.hostname "asing") }}
-export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/intel_icd.i686.json;/usr/share/vulkan/icd.d/intel_icd.x86_64.json
+# export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/intel_icd.i686.json;/usr/share/vulkan/icd.d/intel_icd.x86_64.json
 {{ end }}
 export _JAVA_AWT_WM_NONREPARENTING=1
 
