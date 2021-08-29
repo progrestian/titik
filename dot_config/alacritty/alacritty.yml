@@ -1,0 +1,123 @@
+alt_send_esc: true
+
+background_opacity: 1.0
+
+bell:
+  animation: EaseOutExpo
+  duration:  0
+  color:     '0xffffff'
+
+colors:
+  primary:
+    background: '0x111111'
+    foreground: '0xcccccc'
+  cursor:
+    text:   '0x000000'
+    cursor: '0xcccccc'
+  bright:
+    red:     '0xc0392b'
+    green:   '0x1cdc9a'
+    blue:    '0x3daee9'
+    cyan:    '0x16a085'
+    magenta: '0x8e44ad'
+    yellow:  '0xfdbc4b'
+    black:   '0x7f8c8d'
+    white:   '0xffffff'
+  dim:
+    red:     '0x783228'
+    green:   '0x17a262'
+    blue:    '0x1b668f'
+    cyan:    '0x186c60'
+    magenta: '0x614a73'
+    yellow:  '0xb65619'
+    black:   '0x31363b'
+    white:   '0x63686d'
+  normal:
+    red:     '0xed1515'
+    green:   '0x11d116'
+    blue:    '0x1d99f3'
+    cyan:    '0x1abc9c'
+    magenta: '0x9b59b6'
+    yellow:  '0xf67400'
+    black:   '0x232627'
+    white:   '0xfcfcfc'
+
+cursor:
+  style:            Beam
+  unfocused_hollow: true
+
+debug:
+  log_level:          Warn
+  persistent_logging: false
+  print_events:       false
+  ref_test:           false
+  render_timer:       false
+
+draw_bold_text_with_bright_colors: true
+
+enable_experimental_conpty_backend: false
+
+font:
+  normal:
+    family: Iosevka
+    style:  Regular
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  size: 12
+  use_thin_strokes: true
+
+live_config_reload: true
+
+key_bindings:
+  - { key: C,      mods: Control,       action: Copy             }
+  - { key: V,      mods: Control,       action: Paste            }
+  - { key: T,      mods: Control,       action: SpawnNewInstance }
+  - { key: C,      mods: Control|Shift, chars: "\x09"            }
+  - { key: V,      mods: Control|Shift, chars: "\x03"            }
+  - { key: Left,   mods: Control,       chars: "\x1bb"           }
+  - { key: Right,  mods: Control,       chars: "\x1bf"           }
+  - { key: Return, mods: Control,       chars: " &!\nexit\n"     }
+  - { key: PageUp,                      action: ScrollPageUp,    }
+  - { key: PageDown,                    action: ScrollPageDown   }
+
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: false
+  hints:
+    launcher:
+      program: xdg-open
+      args: []
+    modifiers: None
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+scrolling:
+  history:    10000
+  multiplier: 4
+
+shell:
+  program: /bin/zsh
+
+selection:
+  save_to_clipboard:     false
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+
+window:
+  dimensions:
+    columns: 0
+    lines:   0
+  padding:
+    x: 16
+    y: 16
+  decorations:     full
+  dynamic_padding: false
+  dynamic_title:   true
+  startup_mode:    Windowed
+
+working_directory: None

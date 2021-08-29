@@ -1,0 +1,62 @@
+{
+  "layer": "top",
+  "height": 32,
+  "modules-left": [
+    "sway/workspaces"
+  ],
+{{- if (eq .chezmoi.hostname "menara") }}
+  "modules-right": [
+    "cpu",
+    "memory",
+    "pulseaudio",
+    "clock",
+    "tray"
+  ],
+{{- else if (eq .chezmoi.hostname "asing") }}
+  "modules-right": [
+    "battery",
+    "custom/bluetooth",
+    "cpu",
+    "memory",
+    "network",
+    "pulseaudio",
+    "clock",
+    "tray"
+  ],
+{{ end }}
+  "battery": {
+    "format": "BAT {}",
+    "tooltip-format": "{time}"
+  },
+  "custom/bluetooth": {
+    "format": "BLU {}",
+    "return-type": "json",
+    "interval": 10,
+    "escape": true,
+    "exec": "$XDG_CONFIG_HOME/waybar/bti.sh",
+    "on-click": "$XDG_CONFIG_HOME/waybar/btt.sh",
+  },
+  "clock": {
+    "format": "{:CLK %H:%M}",
+    "tooltip-format": "{:%A\n%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "CPU {usage}"
+  },
+  "memory": {
+    "format": "MEM {}"
+  },
+  "network": {
+    "format-wifi": "NET {signalStrength}",
+    "tooltip-format-wifi": "{essid}\n{ipaddr}\nUp: {bandwidthUpBits}\nDown: {bandwidthDownBits}"
+  },
+  "pulseaudio": {
+    "format": "VOL {volume}",
+    "format-muted": "VOL --"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  }
+}
+

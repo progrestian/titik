@@ -1,0 +1,117 @@
+exec flatpak run com.discordapp.Discord
+exec flatpak run com.valvesoftware.Steam
+exec kdeconnect-indicator
+
+input type:pointer {
+  accel_profile flat
+  pointer_accel -0.25
+}
+
+input type:touchpad {
+  accel_profile adaptive
+  pointer_accel 0
+  natural_scroll enabled
+  scroll_factor 0.5
+  scroll_method two_finger
+  tap enabled
+  tap_button_map lmr
+}
+
+input type:keyboard {
+  xkb_options caps:hyper
+}
+
+output * position 0,0
+output * bg ~/cloud/img/pic/2016-bali/edit-matte/beach-rocks.png fill
+output * adaptive_sync off
+{{- if (eq .chezmoi.hostname "menara") }}
+output DP-2 mode 1920x1080@144.001Hz
+{{- end }}
+
+bar {
+  swaybar_command waybar
+}
+
+# class                 border  bg      text    indictr cborder
+client.focused          #555555 #222222 #cccccc #555555 #555555
+client.focused_inactive #222222 #222222 #cccccc #222222 #222222
+client.unfocused        #222222 #222222 #cccccc #222222 #222222
+client.urgent           #222222 #222222 #cccccc #222222 #222222
+client.placeholder      #222222 #222222 #cccccc #222222 #222222
+client.background               #222222
+
+font Iosevka 12
+default_border pixel 4
+seat seat0 xcursor_theme Adwaita 16
+
+for_window [app_id="org.kde.kdeconnect.urlhandler"] floating enable
+for_window [class="Steam" title="Friends List"] resize set width 820px
+
+assign [app_id="firefox"] workspace firefox
+for_window [class="Steam"] move to workspace steam
+for_window [class="discord"] move to workspace discord
+
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86MonBrightnessUp exec ~/.config/sway/bpu.sh
+bindsym XF86MonBrightnessDown exec ~/.config/sway/bpd.sh
+bindsym XF86TouchpadToggle exec sway input "type:touchpad" events toggle enabled disabled
+
+floating_modifier Mod4 normal
+bindsym Mod4+grave floating toggle
+bindsym Mod4+1 workspace 1
+bindsym Mod4+2 workspace 2
+bindsym Mod4+3 workspace 3
+bindsym Mod4+4 workspace 4
+bindsym Mod4+5 workspace 5
+bindsym Mod4+6 workspace 6
+bindsym Mod4+7 workspace 7
+bindsym Mod4+8 workspace 8
+bindsym Mod4+9 workspace 9
+bindsym Mod4+0 workspace 10
+
+bindsym Mod4+Alt+grave workspace back_and_forth
+bindsym Mod4+Alt+1 move container to workspace 1
+bindsym Mod4+Alt+2 move container to workspace 2
+bindsym Mod4+Alt+3 move container to workspace 3
+bindsym Mod4+Alt+4 move container to workspace 4
+bindsym Mod4+Alt+5 move container to workspace 5
+bindsym Mod4+Alt+6 move container to workspace 6
+bindsym Mod4+Alt+7 move container to workspace 7
+bindsym Mod4+Alt+8 move container to workspace 8
+bindsym Mod4+Alt+9 move container to workspace 9
+bindsym Mod4+Alt+0 move container to workspace 10
+bindsym Mod4+Alt+s move container to workspace steam
+bindsym Mod4+Alt+d move container to workspace discord
+bindsym Mod4+Alt+f move container to workspace firefox
+
+bindsym Mod4+Tab focus next
+bindsym Mod4+q layout toggle tabbed splith
+bindsym Mod4+w exec alacritty
+bindsym Mod4+e exec nautilus -w /home/progrestian/cloud
+bindsym Mod4+r exec grim ~/cloud/img/ss/$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym Mod4+s exec ~/.config/sway/sts.sh
+bindsym Mod4+d exec ~/.config/sway/std.sh
+bindsym Mod4+f exec ~/.config/sway/stf.sh
+bindsym Mod4+z fullscreen
+bindsym Mod4+x kill
+bindsym Mod4+c scratchpad show
+bindsym Mod4+b exec ~/.config/sway/blw.sh
+bindsym Mod4+n exec ~/.config/sway/nlw.sh
+
+bindsym Mod4+Alt+r exec grim -g "$(slurp)" ~/cloud/img/ss/$(date +%Y-%m-%d_%H-%m-%s).png
+bindsym Mod4+Alt+g exec ~/.config/sway/gkm.sh
+bindsym Mod4+Alt+z reload
+bindsym Mod4+Alt+c move scratchpad
+bindsym Mod4+Alt+n exec ~/.config/sway/nkm.sh
+
+bindsym Mod4+Left focus left
+bindsym Mod4+Up focus up
+bindsym Mod4+Right focus right
+bindsym Mod4+Down focus down
+
+bindsym Mod4+Alt+Left move left
+bindsym Mod4+Alt+Up move up
+bindsym Mod4+Alt+Right move right
+bindsym Mod4+Alt+Down move down
