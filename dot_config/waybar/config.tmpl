@@ -23,18 +23,18 @@
     "clock",
     "tray"
   ],
-{{ end }}
+{{- end }}
   "custom/battery": {
     "format": "BAT {}",
     "return-type": "json",
-    "interval": 60,
+    "interval": 10,
     "escape": true,
     "exec": "$XDG_CONFIG_HOME/waybar/battery_indicator.sh"
   },
   "custom/bluetooth": {
     "format": "BLU {}",
     "return-type": "json",
-    "interval": 60,
+    "interval": 10,
     "escape": true,
     "exec": "$XDG_CONFIG_HOME/waybar/bluetooth_indicator.sh",
     "on-click": "$XDG_CONFIG_HOME/waybar/bluetooth_toggle.sh && pkill -RTMIN+2 waybar",
@@ -57,7 +57,7 @@
   "custom/volume": {
     "format": "VOL {}",
     "return-type": "json",
-    "interval": "once",
+    "interval": "10",
     "escape": true,
     "exec": "$XDG_CONFIG_HOME/waybar/volume_indicator.sh",
     "on-click": "amixer set Master toggle && pkill -RTMIN+1 waybar",
