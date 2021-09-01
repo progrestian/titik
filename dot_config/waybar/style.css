@@ -9,12 +9,12 @@
 
 window#waybar {
   background: #222;
-  color: #ccc;
 }
 
 #workspaces button {
   padding: 0 4px;
   background: transparent;
+  color: #ccc;
 }
 
 #workspaces button:hover {

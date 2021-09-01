@@ -8,33 +8,37 @@
   "modules-right": [
     "cpu",
     "memory",
-    "pulseaudio",
+    "custom/volume",
     "clock",
     "tray"
   ],
 {{- else if (eq .chezmoi.hostname "asing") }}
   "modules-right": [
-    "battery",
+    "custom/battery",
     "custom/bluetooth",
     "cpu",
     "memory",
     "network",
-    "pulseaudio",
+    "custom/volume",
     "clock",
     "tray"
   ],
 {{ end }}
-  "battery": {
+  "custom/battery": {
     "format": "BAT {}",
-    "tooltip-format": "{time}"
+    "return-type": "json",
+    "interval": 60,
+    "escape": true,
+    "exec": "$XDG_CONFIG_HOME/waybar/battery_indicator.sh"
   },
   "custom/bluetooth": {
     "format": "BLU {}",
     "return-type": "json",
-    "interval": 10,
+    "interval": 60,
     "escape": true,
-    "exec": "$XDG_CONFIG_HOME/waybar/bti.sh",
-    "on-click": "$XDG_CONFIG_HOME/waybar/btt.sh",
+    "exec": "$XDG_CONFIG_HOME/waybar/bluetooth_indicator.sh",
+    "on-click": "$XDG_CONFIG_HOME/waybar/bluetooth_toggle.sh && pkill -RTMIN+2 waybar",
+    "signal": 2
   },
   "clock": {
     "format": "{:CLK %H:%M}",
@@ -50,9 +54,21 @@
     "format-wifi": "NET {signalStrength}",
     "tooltip-format-wifi": "{essid}\n{ipaddr}\nUp: {bandwidthUpBits}\nDown: {bandwidthDownBits}"
   },
-  "pulseaudio": {
-    "format": "VOL {volume}",
-    "format-muted": "VOL --"
+  "custom/volume": {
+    "format": "VOL {}",
+    "return-type": "json",
+    "interval": "once",
+    "escape": true,
+    "exec": "$XDG_CONFIG_HOME/waybar/volume_indicator.sh",
+    "on-click": "amixer set Master toggle && pkill -RTMIN+1 waybar",
+{{- if (eq .chezmoi.hostname "menara") }}
+    "on-scroll-down": "amixer -M set Master 1%- && pkill -RTMIN+1 waybar",
+    "on-scroll-up": "amixer -M set Master 1%+ && pkill -RTMIN+1 waybar",
+{{- else if (eq .chezmoi.hostname "asing") }}
+    "on-scroll-up": "amixer -M set Master 1%- && pkill -RTMIN+1 waybar",
+    "on-scroll-down": "amixer -M set Master 1%+ && pkill -RTMIN+1 waybar",
+{{- end }}
+    "signal": 1
   },
   "tray": {
     "icon-size": 16,
