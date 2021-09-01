@@ -57,18 +57,18 @@
   "custom/volume": {
     "format": "VOL {}",
     "return-type": "json",
-    "interval": "10",
+    "interval": "once",
     "escape": true,
     "exec": "$XDG_CONFIG_HOME/waybar/volume_indicator.sh",
-    "on-click": "amixer set Master toggle && pkill -RTMIN+1 waybar",
+    "on-click": "amixer set Master toggle && pkill -RTMIN+3 waybar",
 {{- if (eq .chezmoi.hostname "menara") }}
-    "on-scroll-down": "amixer -M set Master 1%- && pkill -RTMIN+1 waybar",
-    "on-scroll-up": "amixer -M set Master 1%+ && pkill -RTMIN+1 waybar",
+    "on-scroll-down": "amixer -M set Master 1%- && pkill -RTMIN+3 waybar",
+    "on-scroll-up": "amixer -M set Master 1%+ && pkill -RTMIN+3 waybar",
 {{- else if (eq .chezmoi.hostname "asing") }}
-    "on-scroll-up": "amixer -M set Master 1%- && pkill -RTMIN+1 waybar",
-    "on-scroll-down": "amixer -M set Master 1%+ && pkill -RTMIN+1 waybar",
+    "on-scroll-up": "amixer -M set Master 1%- && pkill -RTMIN+3 waybar",
+    "on-scroll-down": "amixer -M set Master 1%+ && pkill -RTMIN+3 waybar",
 {{- end }}
-    "signal": 1
+    "signal": 3
   },
   "tray": {
     "icon-size": 16,
