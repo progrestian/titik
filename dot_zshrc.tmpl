@@ -51,10 +51,10 @@ alias exr="exa -R -L "
 alias ext="exa -T -L "
 alias ls="exa"
 alias rrm="/bin/rm"
-alias tmtbl="libreoffice --view ~/cloud/inf/misc/timetable.ods &! exit"
-alias xi="sudo xbps-install -Syu "
-alias xl="xbps-query -m"
-alias xs="xbps-query -Rs "
+alias tmtbl="libreoffice --view ~/inf/misc/timetable.ods &! exit"
+alias di="sudo dnf install -y --setopt=install_weak_deps=False"
+alias dl="sudo dnf repoquery --qf '%{name}' --userinstalled"
+alias ds="dnf search"
 alias ga="git add"
 alias gaa="git add ."
 alias gb="git branch"
@@ -111,6 +111,11 @@ clr() {
   clear
 }
 
+fzb() {
+  bluetoothctl power on
+  bluetoothctl --timeout 2 scan on | fzf
+}
+
 fzc() {
   fn_fzv_file=$(fd -t f | fzf --preview='head -$LINES {}')
   if [ -n "$fn_fzv_file" ] && [ "$fn_fzv_file" != " " ]; then nvim "$fn_fzv_file"; fi
@@ -121,7 +126,7 @@ fzd() {
 }
 
 fzi() {
-  fn_fzi_file=$(find ~/cloud/img -type f | fzf)
+  fn_fzi_file=$(find ~/img -type f | fzf)
   if [ -n "$fn_fzi_file" ] && [ "$fn_fzi_file" != " " ]; then imv -r "$fn_fzi_file"; fi
 }
 
@@ -223,7 +228,7 @@ zstyle ':completion:*' select-prompt %SScrolling: %p%s
 zstyle ':vcs_info:git:*' formats '%F{blue}%r/%b'
 zstyle ':vcs_info:*' enable git
 
-export PROMPT="%F{yellow}%~ %F{green}[\$RCLONE_RUNTIME_LEMARI_DIR] %F{blue}(\$vcs_info_msg_0_)
+export PROMPT="%F{yellow}%~ %F{blue}(\$vcs_info_msg_0_)
 %F{white}%# "
 
 # AUTOSTART
